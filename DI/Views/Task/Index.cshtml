@@ -1,0 +1,73 @@
+﻿@model DI.Models.Task.TaskIndexVM
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<form asp-action="Index" asp-controller="Task" method="post">
+    <div>
+        <label asp-for="Text" class="control-label"></label>
+        <input asp-for="Text" class="form-control" />
+    </div>
+    <div class="form-group">
+        <input type="submit" value="Search" class="btn btn-primary" />
+    </div>
+</form>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Time Limit</th>
+            <th>Budget</th>
+            <th>Location</th>
+            <th>Category</th>
+            <th>Status</th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @if (Model.SearchedItem.Count() == 0)
+        {
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(i => item.Name)</td>
+                    <td>@Html.DisplayFor(i => item.Description)</td>
+                    <td>@Html.DisplayFor(i => item.LimitTime)</td>
+                    <td>@Html.DisplayFor(i => item.Budget)</td>
+                    <td>@Html.DisplayFor(i => item.Location)</td>
+                    <td>@Html.DisplayFor(i => item.Category)</td>
+                    <td>@Html.DisplayFor(i => item.Status)</td>
+                    <td><a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-dark">Change Status</a></td>
+                    <td><a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        }
+        else
+        {
+            @foreach (var item in Model.SearchedItem)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(i => item.Name)</td>
+                    <td>@Html.DisplayFor(i => item.Description)</td>
+                    <td>@Html.DisplayFor(i => item.TimeLimit)</td>
+                    <td>@Html.DisplayFor(i => item.Budget)</td>
+                    <td>@Html.DisplayFor(i => item.LocationID)</td>
+                    <td>@Html.DisplayFor(i => item.CategoryID)</td>
+                    <td>@Html.DisplayFor(i => item.StatusID)</td>
+                    <td><a asp-action="ChangeStatus" asp-route-id="@item.ID" class="btn btn-dark">Change Status</a></td>
+                    <td><a asp-action="Edit" asp-route-id="@item.ID" class="btn btn-primary">Edit</a></td>
+                    <td><a asp-action="Delete" asp-route-id="@item.ID" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
